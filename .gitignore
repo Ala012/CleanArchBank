@@ -11,6 +11,9 @@
 # Dossiers temporaires
 session-state/
 
+# Rapports et captures (non publiés)
+rapport/
+
 # OS
 Thumbs.db
 .DS_Store

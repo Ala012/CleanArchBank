@@ -1,23 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
+/// <summary>
+/// Opération effectuée sur un compte : retrait, versement ou virement.
+/// </summary>
 public class Operation
 {
     public int Id { get; set; }
 
-    [Required]
-    public OperationType TypeOperation { get; set; }
-
-    [Column(TypeName = "decimal(18,2)")]
-    [Range(0.01, 1000000000, ErrorMessage = "Le montant doit être positif.")]
-    public decimal Montant { get; set; }
-
-    public DateTime DateOperation { get; set; } = DateTime.Now;
-
-    [Required]
+    [Required(ErrorMessage = "Le compte est obligatoire.")]
     public int CompteId { get; set; }
 
     public Compte Compte { get; set; } = null!;
+
+    [Required(ErrorMessage = "Le type d'opération est obligatoire.")]
+    [EnumDataType(typeof(OperationType), ErrorMessage = "Le type d'opération est invalide.")]
+    public OperationType TypeOperation { get; set; }
+
+    [Range(0.01, 999_999_999_999.99, ErrorMessage = "Le montant doit être supérieur à zéro.")]
+    public decimal Montant { get; set; }
+
+    public DateTime DateOperation { get; set; } = DateTime.UtcNow;
+
+    [StringLength(250, ErrorMessage = "Le libellé ne peut pas dépasser 250 caractères.")]
+    public string? Libelle { get; set; }
 }
