@@ -5,7 +5,4 @@
     <Project Path="Infrastructure/Infrastructure.csproj" />
     <Project Path="BankAPI/BankAPI.csproj" />
   </Folder>
-  <Folder Name="/tests/">
-    <Project Path="tests/CleanArchBank.UnitTests/CleanArchBank.UnitTests.csproj" />
-  </Folder>
 </Solution>

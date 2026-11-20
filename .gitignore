@@ -14,6 +14,9 @@ session-state/
 # Rapports et captures (non publiés)
 rapport/
 
+# Tests conservés en local, non publiés
+tests/
+
 # OS
 Thumbs.db
 .DS_Store
