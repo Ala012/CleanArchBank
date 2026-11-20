@@ -4,7 +4,6 @@
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4?logo=dotnet&logoColor=white)
 ![EF Core](https://img.shields.io/badge/EF%20Core-10.0-512BD4)
 ![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
-![xUnit](https://img.shields.io/badge/tests-21%20%2F%2021-2E9E44)
 ![Statut](https://img.shields.io/badge/statut-termin%C3%A9-brightgreen)
 
 API REST de **gestion de comptes bancaires** en **ASP.NET Core (.NET 10)**, organisée selon les
@@ -27,7 +26,6 @@ virements, suppression contrôlée) sont appliquées dans le domaine et la couch
 - [Migrations EF Core](#migrations-ef-core)
 - [Endpoints de l'API](#endpoints-de-lapi)
 - [Exemples de requêtes](#exemples-de-requêtes)
-- [Tests unitaires](#tests-unitaires)
 - [Choix techniques](#choix-techniques)
 - [Pistes d'amélioration](#pistes-damélioration)
 - [Auteur](#auteur)
@@ -114,7 +112,6 @@ Les invariants sont portés par les entités :
 | Provider MySQL | `MySql.EntityFrameworkCore` 10.0.12 (Oracle, sans Pomelo) |
 | Base | MySQL 8.4 |
 | Documentation | Swagger / OpenAPI (Swashbuckle 11.0.1) |
-| Tests | xUnit 2.9.3, 21 tests |
 | Validation | DataAnnotations + règles du domaine |
 
 ---
@@ -156,18 +153,13 @@ CleanArchBank/
 │   │   ├── Seed/DatabaseSeeder.cs
 │   │   └── DesignTimeDbContextFactory.cs
 │   └── DependencyInjection.cs
-├── BankAPI/
-│   ├── Controllers/
-│   │   ├── ApiControllerBase.cs
-│   │   ├── ClientsController.cs
-│   │   └── ComptesController.cs
-│   ├── Program.cs
-│   └── appsettings.json
-└── tests/
-    └── CleanArchBank.UnitTests/
-        ├── Application/
-        ├── Domain/
-        └── Fakes/
+└── BankAPI/
+    ├── Controllers/
+    │   ├── ApiControllerBase.cs
+    │   ├── ClientsController.cs
+    │   └── ComptesController.cs
+    ├── Program.cs
+    └── appsettings.json
 ```
 
 ---
@@ -322,23 +314,6 @@ Un retrait supérieur au solde retourne `400 Bad Request` avec un corps `Problem
 
 ---
 
-## Tests unitaires
-
-```powershell
-dotnet test
-```
-
-Les 21 tests couvrent :
-
-- le domaine : crédit, débit, solde nul, solde insuffisant, montants invalides, numéro invalide ;
-- les services : création de client, unicité de l'e-mail, création de compte, retrait accepté ou
-  refusé, versement, suppression bloquée, virement valide ou refusé, agrégats de soldes.
-
-Les repositories sont remplacés par des *fakes* en mémoire : les tests ne nécessitent ni base
-MySQL ni serveur HTTP.
-
----
-
 ## Choix techniques
 
 - **Provider Oracle `MySql.EntityFrameworkCore`** plutôt que Pomelo, conformément au TP.
@@ -357,7 +332,6 @@ MySQL ni serveur HTTP.
 
 - Authentification JWT et rôles (client, conseiller, administrateur).
 - Validation centralisée avec FluentValidation et pagination des listes.
-- Tests d'intégration avec `WebApplicationFactory` et une base MySQL de test.
 - Journal d'audit des opérations et plafonds de retrait paramétrables.
 - Conteneurisation complète de l'API et de la base avec `docker compose`.
 
